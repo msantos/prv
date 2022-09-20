@@ -14,7 +14,6 @@
  */
 #include <stdio.h>
 #include <stdlib.h>
-#include <stdnoreturn.h>
 #include <string.h>
 #include <unistd.h>
 
@@ -38,7 +37,7 @@
 #define PRV_CLOCK_MONOTONIC CLOCK_MONOTONIC
 #endif
 
-#define PRV_VERSION "1.0.0"
+#define PRV_VERSION "1.0.1"
 
 enum { PRV_WR_BLOCK = 0, PRV_WR_DROP, PRV_WR_EXIT };
 
@@ -53,7 +52,7 @@ typedef struct {
 
 static int prv_input(prv_state_t *s);
 static size_t prv_output(prv_state_t *s, char *buf, size_t buflen);
-static noreturn void usage(void);
+static void usage(void);
 
 extern char *__progname;
 
@@ -90,12 +89,12 @@ int main(int argc, char *argv[]) {
     case 'l':
       s.limit = strtonum(optarg, 0, 0xffff, &errstr);
       if (errstr != NULL)
-        errx(EXIT_FAILURE, "strtonum: %s", errstr);
+        errx(2, "strtonum: %s", errstr);
       break;
     case 'w':
       s.window = strtonum(optarg, 1, 0xffff, &errstr);
       if (errstr != NULL)
-        errx(EXIT_FAILURE, "strtonum: %s", errstr);
+        errx(2, "strtonum: %s", errstr);
       break;
     case 'W':
       if (strcmp(optarg, "block") == 0)
@@ -105,15 +104,18 @@ int main(int argc, char *argv[]) {
       else if (strcmp(optarg, "exit") == 0)
         s.write_error = PRV_WR_EXIT;
       else
-        errx(EXIT_FAILURE, "invalid option: %s: block|drop|exit", optarg);
+        errx(2, "invalid option: %s: block|drop|exit", optarg);
 
       break;
     case 'v':
       s.verbose += 1;
       break;
     case 'h':
+      usage();
+      exit(0);
     default:
       usage();
+      exit(2);
     }
   }
 
@@ -187,16 +189,16 @@ static size_t prv_output(prv_state_t *s, char *buf, size_t buflen) {
   return fwrite(buf, 1, buflen, stdout);
 }
 
-static noreturn void usage() {
-  errx(EXIT_FAILURE,
-       "[OPTION]\n"
-       "Pressure relief valve, version: %s (using %s mode process "
-       "restriction)\n\n"
-       "-l, --limit               message rate limit\n"
-       "-w, --window              message rate window\n"
-       "-W, --write-error <exit|drop|block>\n"
-       "                          behaviour if write buffer is full\n"
-       "-v, --verbose             verbose mode\n"
-       "-h, --help                help",
-       PRV_VERSION, RESTRICT_PROCESS);
+static void usage() {
+  (void)fprintf(stderr,
+                "%s: [OPTION]\n"
+                "Pressure relief valve, version: %s (using %s mode process "
+                "restriction)\n\n"
+                "-l, --limit               message rate limit\n"
+                "-w, --window              message rate window\n"
+                "-W, --write-error <exit|drop|block>\n"
+                "                          behaviour if write buffer is full\n"
+                "-v, --verbose             verbose mode\n"
+                "-h, --help                help\n",
+                __progname, PRV_VERSION, RESTRICT_PROCESS);
 }
