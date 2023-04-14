@@ -179,12 +179,12 @@ static size_t prv_output(prv_state_t *s, char *buf, size_t buflen) {
 
   VERBOSE(s, 3, "INTERVAL:%d/%d\n", sec, s->window);
 
-  if ((s->limit > 0) && (s->count >= s->limit)) {
+  s->count++;
+
+  if ((s->limit > 0) && (s->count > s->limit)) {
     VERBOSE(s, 2, "DISCARD:%zu/%zu:%s", s->count, s->limit, buf);
     return buflen;
   }
-
-  s->count++;
 
   return fwrite(buf, 1, buflen, stdout);
 }
