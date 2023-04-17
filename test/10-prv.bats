@@ -64,6 +64,8 @@ EOF
 }
 
 @test "process restriction: ioctl: redirect stdout to a device" {
+    case "$(uname -s)" in
+    Linux)
     run script -e -a /dev/null -c "prv <<<$PATH >/dev/null"
     cat << EOF
 --- output
@@ -71,4 +73,16 @@ $output
 --- output
 EOF
     [ "$status" -eq 0 ]
+    ;;
+    FreeBSD)
+    run script -e -a /dev/null prv <<<$PATH >/dev/null
+    cat << EOF
+--- output
+$output
+--- output
+EOF
+    [ "$status" -eq 0 ]
+    ;;
+    *) skip ;;
+    esac
 }
