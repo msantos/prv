@@ -65,7 +65,7 @@ ssize_t getndelim(char **buf, size_t *bufsiz, size_t nmax, int delimiter,
       return -1;
     }
     *ptr++ = c;
-    if (c == delimiter || ptr - *buf >= nmax) {
+    if (c == delimiter || ((ptr - *buf > 0) && ((size_t)(ptr - *buf) >= nmax))) {
       *ptr = '\0';
       return ptr - *buf;
     }

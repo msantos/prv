@@ -36,7 +36,7 @@ endif
 RM ?= rm
 
 RESTRICT_PROCESS ?= rlimit
-PRV_CFLAGS ?= -g -Wall -fwrapv -pedantic -pie -fPIE
+PRV_CFLAGS ?= -g -Wall -Wextra -fwrapv -pedantic -pie -fPIE
 PRV_MAXBUF ?= 8192
 
 CFLAGS += $(PRV_CFLAGS) \

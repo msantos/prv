@@ -1,4 +1,4 @@
-/* Copyright (c) 2017-2022, Michael Santos <michael.santos@gmail.com>
+/* Copyright (c) 2017-2023, Michael Santos <michael.santos@gmail.com>
  *
  * Permission to use, copy, modify, and/or distribute this software for any
  * purpose with or without fee is hereby granted, provided that the above
@@ -141,7 +141,7 @@ static int prv_input(prv_state_t *s) {
   ssize_t n;
 
   while ((n = getnline(&buf, &buflen, 4096, stdin)) != -1) {
-    if (prv_output(s, buf, n) != n) {
+    if (prv_output(s, buf, n) != (size_t)n) {
       switch (errno) {
       case 0:
         goto PRV_EOF;
@@ -149,6 +149,7 @@ static int prv_input(prv_state_t *s) {
         VERBOSE(s, 1, "PIPE FULL:dropped:%s", buf);
         if (s->write_error == PRV_WR_DROP)
           continue;
+        /* fallthrough */
       default:
         return -1;
       }
