@@ -1,4 +1,4 @@
-/* Copyright (c) 2017-2023, Michael Santos <michael.santos@gmail.com>
+/* Copyright (c) 2017-2025, Michael Santos <michael.santos@gmail.com>
  *
  * Permission to use, copy, modify, and/or distribute this software for any
  * purpose with or without fee is hereby granted, provided that the above
@@ -190,7 +190,7 @@ static size_t prv_output(prv_state_t *s, char *buf, size_t buflen) {
   return fwrite(buf, 1, buflen, stdout);
 }
 
-static void usage() {
+static void usage(void) {
   (void)fprintf(stderr,
                 "%s: [OPTION]\n"
                 "Pressure relief valve, version: %s (using %s mode process "
