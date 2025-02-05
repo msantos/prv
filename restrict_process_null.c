@@ -1,4 +1,4 @@
-/* Copyright (c) 2017, Michael Santos <michael.santos@gmail.com>
+/* Copyright (c) 2017-2025, Michael Santos <michael.santos@gmail.com>
  *
  * Permission to use, copy, modify, and/or distribute this software for any
  * purpose with or without fee is hereby granted, provided that the above
@@ -14,7 +14,7 @@
  */
 #include "restrict_process.h"
 #ifdef RESTRICT_PROCESS_null
-int restrict_process_init() { return 0; }
+int restrict_process_init(void) { return 0; }
 
-int restrict_process_stdin() { return 0; }
+int restrict_process_stdin(void) { return 0; }
 #endif
