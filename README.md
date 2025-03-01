@@ -24,6 +24,7 @@ Fri Aug 26 00:06:04 EDT 2022
 make
 
 # build a static executable using musl
+## sudo apt install musl-dev musl-tools
 ./musl-make clean all
 
 # select a different method for process restriction
