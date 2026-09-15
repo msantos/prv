@@ -10,7 +10,7 @@ prv flow controls standard input by sampling lines in a time window.
 
 # EXAMPLES
 
-```
+```bash
 while :; do date; done | prv -l 1 -w 10
 Fri Aug 26 00:05:45 EDT 2022
 Fri Aug 26 00:05:54 EDT 2022
@@ -20,7 +20,7 @@ Fri Aug 26 00:06:04 EDT 2022
 
 # BUILD
 
-```
+```bash
 make
 
 # build a static executable using musl
