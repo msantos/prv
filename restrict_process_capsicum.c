@@ -43,7 +43,7 @@ int restrict_process_stdin(void) {
   cap_rights_t policy_read;
   cap_rights_t policy_write;
 
-  closefrom(STDERR_FILENO+1);
+  closefrom(STDERR_FILENO + 1);
 
   (void)cap_rights_init(&policy_read, CAP_READ, CAP_EVENT);
   (void)cap_rights_init(&policy_write, CAP_WRITE, CAP_READ);
